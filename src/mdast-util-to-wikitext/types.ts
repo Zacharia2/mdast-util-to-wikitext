@@ -1,6 +1,7 @@
 import type { Nodes } from 'mdast';
+
 export type UnistParent = import('unist').Parent;
-export { Nodes };
+export type { Nodes };
 export type Parent = Extract<Nodes, UnistParent>;
 export type SafeOptions = {
   before: string;
@@ -22,14 +23,14 @@ export type Context = {
    */
   enter: Enter;
   options: Options;
-  conflict: Array<Conflict>;
-  join: Array<Join>;
+  conflict: Conflict[];
+  join: Join[];
   handle?: Handle;
   handlers: Handlers;
   /**
    *   The marker used by the current list.
    */
-  bulletCurrent?: string;
+  bullet: string;
   /**
    *   The marker used by the previous list.
    */

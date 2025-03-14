@@ -1,4 +1,4 @@
-import type { Context, Options } from './types';
+import type { Context, Options } from '../types';
 
 /**
  * @param base Context, that will be accessed in each handler.

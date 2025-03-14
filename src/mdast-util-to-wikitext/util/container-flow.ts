@@ -1,52 +1,28 @@
 import type { Context, Nodes, Parent } from '../types';
 
 export function containerFlow(parent: Parent, context: Context): string {
-  const indexStack = context.indexStack;
   const children = parent.children || [];
-  const results: Array<string> = [];
-  let index = -1;
+  const results: string[] = [];
 
-  indexStack.push(-1);
-
-  while (++index < children.length) {
-    const child = children[index];
-
-    indexStack[indexStack.length - 1] = index;
-
+  for (const [index, child] of children.entries()) {
     context.handle && results.push(context.handle(child, parent, context, { before: '\n', after: '\n' }));
-
-    if (child.type !== 'list') {
-      context.bulletLastUsed = undefined;
-    }
-
     if (index < children.length - 1) {
-      results.push(between(child, children[index + 1]));
+      let curr = children[index];
+      let next = children[index + 1];
+      results.push(between(curr, next, parent, context));
     }
   }
-
-  indexStack.pop();
-
   return results.join('');
+}
 
-  function between(left: Nodes, right: Nodes): string {
-    let index = context.join.length;
-
-    while (index--) {
-      const result = context.join[index](left, right, parent, context);
-
-      if (result === true || result === 1) {
-        break;
-      }
-
-      if (typeof result === 'number') {
-        return '\n'.repeat(1 + result);
-      }
-
-      if (result === false) {
-        return '\n\n';
-      }
+function between(left: Nodes, right: Nodes, parent: Parent, context: Context): string {
+  // "Happy! ".repeat(3) Expected output: "Happy! Happy! Happy! "
+  for (const join of context.join) {
+    const result = join(left, right, parent, context);
+    if (result === true || result === 1) break;
+    if (typeof result === 'number') {
+      return '\n'.repeat(1 + result);
     }
-
-    return '\n\n';
   }
+  return '\n\n';
 }

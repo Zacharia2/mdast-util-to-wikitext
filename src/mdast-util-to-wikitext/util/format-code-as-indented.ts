@@ -1,4 +1,4 @@
-import { Code } from 'mdast';
+import { type Code } from 'mdast';
 import type { Context } from '../types';
 
 /**

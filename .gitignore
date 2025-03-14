@@ -66,3 +66,4 @@ public-dist/
 settings-dev/
 .dccache
 .vscode/launch.json
+.idea

@@ -1,5 +1,5 @@
-import { Association } from 'mdast'
-import {decodeString} from 'micromark-util-decode-string'
+import { type Association } from 'mdast';
+import { decodeString } from 'micromark-util-decode-string';
 
 /**
  * The `label` of an association is the string value: character escapes and
@@ -17,9 +17,6 @@ import {decodeString} from 'micromark-util-decode-string'
  * @returns {string}
  */
 export function association(node: Association): string {
-  if (node.label || !node.identifier) {
-    return node.label || ''
-  }
-
-  return decodeString(node.identifier)
+  if (node.label || !node.identifier) return node.label || '';
+  return decodeString(node.identifier);
 }

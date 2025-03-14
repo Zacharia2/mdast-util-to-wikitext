@@ -1,4 +1,4 @@
-import type { Conflict } from './types';
+import type { Conflict } from '../types';
 
 /**
  * List of types that occur in phrasing (paragraphs, headings), but cannot
